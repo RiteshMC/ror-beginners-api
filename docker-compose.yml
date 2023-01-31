@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   db:
-    container_name: db.app
+    container_name: db.ror-beginners-api
     build: "build/mysql"
     platform: linux/amd64
     ports:
@@ -12,20 +12,20 @@ services:
       - ./tmp/app-db_volume:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: tiger
-      MYSQL_DATABASE: app
+      MYSQL_DATABASE: ror-begin-db
       MYSQL_USER: ror_user
       MYSQL_PASSWORD: ror_pass
     command: mysqld --sql_mode=""
 
   web:
-    container_name: web.app
+    container_name: web.ror-beginners-api
     build:
       context: .
       dockerfile: build/web/Dockerfile
     env_file:
       - .env
     volumes:
-      - ./app:/app
+      - ./app:/opt/app
     ports:
       - "${WEB_PORT}:3000"
     depends_on:
