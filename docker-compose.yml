@@ -9,10 +9,10 @@ services:
     restart: always
     volumes:
       - ./tmp/tmp_mysql:/tmp
-      - ./tmp/app-db_volume:/var/lib/mysql
+      - ./tmp/src-db_volume:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: tiger
-      MYSQL_DATABASE: ror-begin-db
+      MYSQL_DATABASE: src-begin-db
       MYSQL_USER: ror_user
       MYSQL_PASSWORD: ror_pass
     command: mysqld --sql_mode=""
@@ -25,7 +25,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./app:/opt/app
+      - ./src:/opt/src
     ports:
       - "${WEB_PORT}:3000"
     depends_on:

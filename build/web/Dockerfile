@@ -9,8 +9,8 @@ RUN apt update -qq
 RUN apt install -y postgresql-client nodejs yarn
 
 # Prepare working directory.
-WORKDIR /opt/app
-COPY ./app /opt/app
+WORKDIR /opt/src
+COPY ./src /opt/src
 RUN gem install bundler
 RUN bundle install
 
@@ -20,5 +20,5 @@ RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
-# Start app server.
+# Start src server.
 CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
