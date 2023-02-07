@@ -31,7 +31,7 @@ services:
     depends_on:
       - db
     environment:
-      - TZ=Japan
+      - TZ=UTC
     # pry debugging need these settings
     tty: true
     stdin_open: true
