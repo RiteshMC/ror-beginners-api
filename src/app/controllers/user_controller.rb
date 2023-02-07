@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-  before_action :set_user, only: %i[ show update destroy ]
+  before_action :authenticate_user, except: %i[create]
   require 'bcrypt'
 
   # GET /user
@@ -7,8 +7,9 @@ class UserController < ApplicationController
     @users = User.all
   end
 
-  # GET /user/1
+  # GET /user/self
   def show
+    @user = @current_user
   end
 
   # # POST /user
@@ -30,6 +31,7 @@ class UserController < ApplicationController
     @user.height = form.height
     @user.weight = form.weight
     @user.set_age(@user.birth_date)
+    @user.token = Digest::UUID.uuid_v4
 
     return error_validation(@user.errors) if @user.invalid?
 
@@ -37,10 +39,12 @@ class UserController < ApplicationController
 
   end
 
-  # PATCH/PUT /user/1
+  # PATCH/PUT /user/self
   def update
     form = UserUpdateForm.new(params)
     error_validation(form.errors) if form.invalid?
+
+    @user = @current_user
 
     @user.first_name = form.first_name unless form.first_name.nil?
     @user.last_name = form.last_name unless form.last_name.nil?
@@ -59,23 +63,12 @@ class UserController < ApplicationController
     @user.save!
   end
 
-  # DELETE /user/1
+  # DELETE /user/self
   def destroy
+    @user = @current_user
     @user.destroy
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_user
-    @user = User.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    render json: { "error": "user not found!" }, :status => 404
-  end
-
-  # # Only allow a list of trusted parameters through.
-  # def user_params
-  #   params.require(:user).permit(:first_name, :last_name)
-  # end
 
 end

@@ -9,9 +9,12 @@ Rails.application.routes.draw do
   put 'articles/:id' => 'article#update'
   delete 'articles/:id' => 'article#destroy'
 
-  get 'users' => 'user#index'
-  get 'users/:id' => 'user#show'
   post 'users' => 'user#create'
-  put 'users/:id' => 'user#update'
-  delete 'users/:id' => 'user#destroy'
+  post 'login' => 'auth#login'
+
+  # get 'users' => 'user#index'
+  get 'users/self' => 'user#show'
+  put 'users/self' => 'user#update'
+  delete 'users/self' => 'user#destroy'
+
 end
