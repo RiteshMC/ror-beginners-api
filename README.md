@@ -36,28 +36,41 @@ $ make help
 ```
 
 Create a Docker image and start the container.
-
-```shell
-# this starts the nginx server 
+```
+$ make force-build
 $ make start
 ```
 
-Delete the Docker image / container.
+#### 2.2 Creates database,migration and inserts some test data
+```shell
+#open new terminal and run following commands
+$ make webbash
+$ rails db:migrate:reset #first time only
+```
 
+## At this point you should actually be able to curl the API
+```
+url : http://localhost:{WEB_PORT}
+```
+
+
+### Some useful commands
+
+#### Everytime, you can start and stop project
+```shell
+$ make start #when you want to start the project
+$ make stop #when you want to stop the project
+```
+
+Delete the Docker image / container.
 ```shell
 $ make clean
 ```
 
-### Table & master data preparation
-
+### If there is some changes in migration and seed files
 ```shell
 $ make gobash
 > rails db:create
 > rails db:migrate
-```
-
-## At this point you should actually be able to curl the API
-
-```
-url : http://localhost:{WEB_PORT}
+> rails db:seed
 ```
