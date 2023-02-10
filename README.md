@@ -70,7 +70,16 @@ $ make clean
 ### If there is some changes in migration and seed files
 ```shell
 $ make gobash
+
+# To create a db
 > rails db:create
+
+# To drop a db
+> rails db:drop
+
+# To run new migrations
 > rails db:migrate
+
+# To seed the db
 > rails db:seed
 ```
