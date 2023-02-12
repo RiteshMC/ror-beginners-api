@@ -15,8 +15,10 @@ command		|  definition
 >> start  	|  starts the docker container.
 >> stop   	|  stops the docker container.
 >> clean  	|  removes all the temp files, stops the docker and removes the docker images as well.
->> webbash 	|  enter the Web docker Bash.
->> dbbash 	|  enter the Db docker Bash.
+>> web-bash 	|  enter the Web docker Bash.
+>> db-bash 	|  enter the Db docker Bash.
+>> rubocop 	|  ruby static code analyzer.
+>> rubocop-fix 	|  ruby static code analyzer with autocorrection.
 \n
 endef
 export HELP
@@ -38,8 +40,15 @@ clean:
 	rm -rf ./app/tmp
 	docker-compose -f ./docker-compose.yml down --rmi all
 
-webbash:
+web-bash:
 	$(WEBBASH)
 
-dbbash:
+db-bash:
 	$(DBBASH)
+
+
+rubocop:
+	$(WEBBASH) -c 'rubocop'
+
+rubocop-fix:
+	$(WEBBASH) -c 'rubocop -A'

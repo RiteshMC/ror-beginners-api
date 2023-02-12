@@ -1,0 +1,72 @@
+AllCops:
+  NewCops: enable
+  Exclude:
+    - db/migrate/**/*
+    - db/schema.rb
+    - config/**/*
+    - script/**/*
+    - bin/**/*
+    - test/**/*
+    - app/admin/**/*
+    - app/channels/**/*
+    - app/jobs/**/*
+    - node_modules/**/*
+    - Gemfile
+    - Rakefile
+    - config.ru
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/NumericPredicate:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+  Max: 20
+  Exclude:
+    - "db/migrate/**/*"
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - "config/**/*"
+    - "db/migrate/**/*"
+    - "lib/capistrano/task/*.rake"
+    - "lib/jwt-auth/spec/**/*"
+    - "spec/**/*"
+
+Metrics/ClassLength:
+  Max: 200
+  Exclude:
+    - "db/migrate/**/*"
+
+Layout/LineLength:
+  Max: 180
+
+Metrics/MethodLength:
+  Max: 40
+  Exclude:
+    - "db/migrate/**/*"
+
+Metrics/ParameterLists:
+  Max: 15
+
+Metrics/PerceivedComplexity:
+  Max: 13
+
+Naming/MethodParameterName:
+  MinNameLength: 2
+  AllowedNames:
+    - "e"

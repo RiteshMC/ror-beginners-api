@@ -16,22 +16,22 @@ class UserCreateForm
   validates :last_name, presence: true, length: { in: 1..25 }
   validates :first_name_kana, presence: true, length: { in: 1..25 }, format: {
     with: KANA_VALIDATION_FORMAT,
-    message: "Field must be in Katakana format.",
+    message: 'Field must be in Katakana format.',
     allow_blank: true
   }
   validates :last_name_kana, presence: true, length: { in: 1..25 }, format: {
     with: KANA_VALIDATION_FORMAT,
-    message: "Field must be in Katakana format.",
+    message: 'Field must be in Katakana format.',
     allow_blank: true
   }
   validates :gender, presence: true, inclusion: { in: GENDER_OPTIONS }
   validates :email, presence: true, length: { in: 5..255 }, format: {
     with: EMAIL_VALIDATION_FORMAT,
-    message: "Email format incorrect."
+    message: 'Email format incorrect.'
   }
   validates :password, presence: true, length: { in: 8..50 }, format: {
     with: PASSWORD_CONTAINS_FORMAT,
-    message: "Password must have only have half width alphanumeric characters and must include: 1 uppercase, 1 lowercase, and 1 digit"
+    message: 'Password must have only have half width alphanumeric characters and must include: 1 uppercase, 1 lowercase, and 1 digit'
   }
   validates :birth_date, presence: true
   validates :height, numericality: { only_integer: true, greater_than_or_equal_to: 50, less_than_or_equal_to: 500 }

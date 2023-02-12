@@ -17,8 +17,6 @@ class UserController < ApplicationController
     form = UserCreateForm.new(params)
     return error_validation(form.errors) if form.invalid?
 
-    puts form.first_name
-
     @user = User.new
     @user.first_name = form.first_name
     @user.last_name = form.last_name
@@ -36,7 +34,6 @@ class UserController < ApplicationController
     return error_validation(@user.errors) if @user.invalid?
 
     @user.save!
-
   end
 
   # PATCH/PUT /user/self
@@ -68,7 +65,4 @@ class UserController < ApplicationController
     @user = @current_user
     @user.destroy
   end
-
-  private
-
 end

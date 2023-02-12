@@ -1,5 +1,5 @@
 class ArticleController < ApplicationController
-  before_action :set_article, only: %i[ show update destroy ]
+  before_action :set_article, only: %i[show update destroy]
 
   # GET /articles
   def index
@@ -13,16 +13,16 @@ class ArticleController < ApplicationController
   # POST /articles
   def create
     @article = Article.new(article_params)
-    unless @article.save
-      render json: @article.errors, status: :unprocessable_entity
-    end
+    return if @article.save
+
+    render json: @article.errors, status: :unprocessable_entity
   end
 
   # PATCH/PUT /articles/1
   def update
-    unless @article.update(article_params)
-      render json: @article.errors, status: :unprocessable_entity
-    end
+    return if @article.update(article_params)
+
+    render json: @article.errors, status: :unprocessable_entity
   end
 
   # DELETE /articles/1
@@ -36,7 +36,7 @@ class ArticleController < ApplicationController
   def set_article
     @article = Article.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { "error": "article not found!" }, :status => 404
+    render json: { error: 'article not found!' }, status: 404
   end
 
   # Only allow a list of trusted parameters through.
