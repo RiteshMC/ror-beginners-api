@@ -2,17 +2,17 @@ class UserController < ApplicationController
   before_action :authenticate_user, except: %i[create]
   require 'bcrypt'
 
-  # GET /user
+  # GET /post
   def index
     @users = User.all
   end
 
-  # GET /user/self
+  # GET /post/self
   def show
     @user = @current_user
   end
 
-  # # POST /user
+  # # POST /post
   def create
     form = UserCreateForm.new(params)
     return error_validation(form.errors) if form.invalid?
@@ -28,7 +28,7 @@ class UserController < ApplicationController
     @user.birth_date = form.birth_date
     @user.height = form.height
     @user.weight = form.weight
-    @user.set_age(@user.birth_date)
+    @user.calculate_age(@user.birth_date)
     @user.token = Digest::UUID.uuid_v4
 
     return error_validation(@user.errors) if @user.invalid?
@@ -36,7 +36,7 @@ class UserController < ApplicationController
     @user.save!
   end
 
-  # PATCH/PUT /user/self
+  # PATCH/PUT /post/self
   def update
     form = UserUpdateForm.new(params)
     error_validation(form.errors) if form.invalid?
@@ -53,14 +53,14 @@ class UserController < ApplicationController
     @user.birth_date = form.birth_date unless form.birth_date.nil?
     @user.height = form.height unless form.height.nil?
     @user.weight = form.weight unless form.weight.nil?
-    @user.set_age(@user.birth_date)
+    @user.calculate_age(@user.birth_date)
 
     return error_validation(@user.errors) if @user.invalid?
 
     @user.save!
   end
 
-  # DELETE /user/self
+  # DELETE /post/self
   def destroy
     @user = @current_user
     @user.destroy

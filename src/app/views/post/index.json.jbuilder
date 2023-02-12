@@ -8,7 +8,7 @@ json.metadata do
   # json.total_count @pagy.count
 end
 json.data do
-  json.array! @users.each do |user|
-    json.partial! 'user/user', user:user
+  json.array! @posts.each do |post|
+    json.partial! 'user/user', post:post
   end
 end

@@ -12,9 +12,12 @@ Rails.application.routes.draw do
   post 'users' => 'user#create'
   post 'login' => 'auth#login'
 
-  # get 'users' => 'user#index'
+  # get 'users' => 'post#index'
   get 'users/self' => 'user#show'
   put 'users/self' => 'user#update'
   delete 'users/self' => 'user#destroy'
+
+  post 'posts' => 'post#create'
+
 
 end
