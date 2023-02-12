@@ -67,7 +67,7 @@ Delete the Docker image / container.
 $ make clean
 ```
 
-### If there is some changes in migration and seed files
+#### If there are some changes in migration and seed files
 ```shell
 $ make gobash
 
@@ -82,4 +82,13 @@ $ make gobash
 
 # To seed the db
 > rails db:seed
+```
+
+####
+```shell
+# To view lints without autocorrection.
+$ make rubcop 
+
+# To view lints with autocorrection.
+$ make rubcop-fix 
 ```
