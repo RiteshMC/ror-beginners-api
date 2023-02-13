@@ -2,5 +2,5 @@
 
 json.result 'success'
 json.data do
-  json.partial! 'user/user', post: @post
+  json.partial! 'post/post', post: @post
 end

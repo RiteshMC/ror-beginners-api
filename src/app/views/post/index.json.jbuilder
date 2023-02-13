@@ -9,6 +9,6 @@ json.metadata do
 end
 json.data do
   json.array! @posts.each do |post|
-    json.partial! 'user/user', post:post
+    json.partial! 'post/post', post:post
   end
 end

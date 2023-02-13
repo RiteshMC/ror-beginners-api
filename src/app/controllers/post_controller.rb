@@ -1,15 +1,16 @@
 class PostController < ApplicationController
   before_action :authenticate_user
+  before_action :set_post, only: %i[show update destroy publish unpublish ]
+  require 'date'
 
-  # # GET /posts
-  # def index
-  #   @users = User.all
-  # end
+  # GET /posts
+  def index
+    @posts = Post.where(author_id: @current_user.id)
+  end
 
-  # # GET /posts/self
-  # def show
-  #   @post = @current_user
-  # end
+  # GET /posts/:id
+  def show
+  end
 
   # # POST /posts
   def create
@@ -29,33 +30,51 @@ class PostController < ApplicationController
     @post.save!
   end
 
-  # # PATCH/PUT /posts/self
-  # def update
-  #   form = UserUpdateForm.new(params)
-  #   error_validation(form.errors) if form.invalid?
-  #
-  #   @post = @current_user
-  #
-  #   @post.first_name = form.first_name unless form.first_name.nil?
-  #   @post.last_name = form.last_name unless form.last_name.nil?
-  #   @post.first_name_kana = form.first_name_kana unless form.first_name_kana.nil?
-  #   @post.last_name_kana = form.last_name_kana unless form.last_name_kana.nil?
-  #   @post.gender = form.gender unless form.gender.nil?
-  #   @post.email = form.email unless form.email.nil?
-  #   @post.password = BCrypt::Password.create(form.password) unless form.password.nil?
-  #   @post.birth_date = form.birth_date unless form.birth_date.nil?
-  #   @post.height = form.height unless form.height.nil?
-  #   @post.weight = form.weight unless form.weight.nil?
-  #   @post.set_age(@post.birth_date)
-  #
-  #   return error_validation(@post.errors) if @post.invalid?
-  #
-  #   @post.save!
-  # end
-  #
-  # # DELETE /posts/self
-  # def destroy
-  #   @post = @current_user
-  #   @post.destroy
-  # end
+  # PUT /posts/:id
+  def update
+    form = PostUpdateForm.new(params)
+    error_validation(form.errors) if form.invalid?
+
+    @post.author_id = @current_user.id
+    @post.title = form.title unless form.title.nil?
+    @post.meta_title = form.meta_title unless form.meta_title.nil?
+    @post.slug = form.slug unless form.slug.nil?
+    @post.summary = form.summary unless form.summary.nil?
+    @post.content = form.content unless form.content.nil?
+
+    return error_validation(@post.errors) if @post.invalid?
+
+    @post.save!
+  end
+
+  # PATCH /posts/:id/publish
+  def publish
+    @post.published = 1
+    @post.published_date = DateTime.now()
+    @post.save!
+    render_success(true)
+  end
+
+  # PATCH /posts/:id/unpublish
+  def unpublish
+    @post.published = 0
+    @post.published_date = nil
+    @post.save!
+    render_success(true)
+  end
+
+  # DELETE /posts/:id
+  def destroy
+    @post.destroy
+  end
+
+  private
+
+  def set_post
+    @post = Post.find(params[:id])
+    return error_unauthorized if @post.author_id != @current_user.id
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'post not found!' }, status: 404
+  end
+
 end

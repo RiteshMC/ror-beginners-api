@@ -17,7 +17,12 @@ Rails.application.routes.draw do
   put 'users/self' => 'user#update'
   delete 'users/self' => 'user#destroy'
 
+  get 'posts' => 'post#index'
   post 'posts' => 'post#create'
-
+  get 'posts/:id' => 'post#show'
+  put 'posts/:id' => 'post#update'
+  delete 'posts/:id' => 'post#destroy'
+  patch 'posts/:id/publish' => 'post#publish'
+  patch 'posts/:id/unpublish' => 'post#unpublish'
 
 end
