@@ -24,5 +24,5 @@ Rails.application.routes.draw do
   delete 'posts/:id' => 'post#destroy'
   patch 'posts/:id/publish' => 'post#publish'
   patch 'posts/:id/unpublish' => 'post#unpublish'
-
+  post 'posts/:id/comment' => 'post#comment'
 end

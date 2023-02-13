@@ -1,6 +1,6 @@
 class PostController < ApplicationController
   before_action :authenticate_user
-  before_action :set_post, only: %i[show update destroy publish unpublish ]
+  before_action :set_post, only: %i[show update destroy publish unpublish comment ]
   require 'date'
 
   # GET /posts
@@ -66,6 +66,22 @@ class PostController < ApplicationController
   # DELETE /posts/:id
   def destroy
     @post.destroy
+  end
+
+  # POST /posts/:id/comment
+  def comment
+    form = PostCommentCreateForm.new(params)
+    return error_validation(form.errors) if form.invalid?
+
+    @pc = PostComment.new
+    @pc.post = @post
+    @pc.title = form.title
+    @pc.content = form.content
+
+    return error_validation(@pc.errors) if @pc.invalid?
+    @pc.save!
+
+    render_success({ comment_created: true })
   end
 
   private
